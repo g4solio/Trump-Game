@@ -24,3 +24,4 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
+/TrumpMasterServer/nbproject/private/

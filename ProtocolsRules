@@ -1,0 +1,51 @@
+FromClientToMasterServer
+	<Comunication>[NickName]:msg
+	<PlayerSettings>
+		-Login:[username]:[password]
+		-ListOfRooms
+		-AddMeToRoom:[idRoom]:[passwordStanza]
+		-SignUp:[username]:[password]
+		-CreateARoom:[NomeRoom]:[NumeroPlayer]:[Password]
+		-RoomHasBeenClosed
+		-ChangeFaction:[NewFaction]
+		-ReadyToPlay
+		-NotReadyToPlay
+	<GameInteraction>
+		-DroppedACard:[Card]
+		-RequireAlliedCard
+FromServerToClient
+	<Comunication>[NickName]:msg
+	<PlayerSettings>
+		-LoginAccepted
+		-LoginRefused:[reason]
+		-AvailableRooms:[NameRoom]:[idRoom]:[MaxPlayer]:[JoinedPlayer]
+		-SignUpAccepted
+		-SingUpRefused:[reasons]
+		-RoomCreatedSuccesfully
+		-PlayerJoinedRoom:[NickNamePlayer]
+		-PlayerAbandonedRoom:[NickName]
+		-RoomHasBeenClosed
+		-ChangeFactions:[Player]:[NewFaction]
+		-GameHasBeenStarted
+		-ReadyToPlay:[NickName]
+		-NotReadyToPlay:[NickName]
+	<GameInteraction>
+		-CardHasBeenDropped:[NickName]:[Card] 							//ToAll
+		-PlayerPickedUP:[NickName] 										//ToAll
+		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 			//ToAll
+		-CatchACard:[Card]
+		-ShowAlliesCards:[Cards]										//TOAllyFaction
+
+
+
+Cards
+01 Asso		|   G -----> Gold -----> Denari
+02 Due		|
+03 Tre		|   W -----> Wood -----> Bastoni
+04 Quattro	|	
+05 Cinque	|	C -----> Cup -----> Coppe
+06 Sei 		|	
+07 Sette	|	S -----> Sword -----> Spade
+08 Fante 	|	
+09 Cavallo	|
+10 Re		|
