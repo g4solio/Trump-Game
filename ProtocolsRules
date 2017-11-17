@@ -31,17 +31,17 @@ FromServerToClient
 		-NotReadyToPlay:[NickName]
 	<GameInteraction>
 		-CardHasBeenDropped:[NickName]:[Card] 							//ToAll
-		-PlayerPickedUP:[NickName] 										//ToAll
-		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 			//ToAll
+		-PlayerPickedUP:[NickName] 								//ToAll
+		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 					//ToAll
 		-CatchACard:[Card]
-		-ShowAlliesCards:[Cards]										//TOAllyFaction
+		-ShowAlliesCards:[Cards]								//TOAllyFaction
 
 
 
 Cards
-01 Asso		|   G -----> Gold -----> Denari
+01 Asso		|	G -----> Gold -----> Denari
 02 Due		|
-03 Tre		|   W -----> Wood -----> Bastoni
+03 Tre		|	W -----> Wood -----> Bastoni
 04 Quattro	|	
 05 Cinque	|	C -----> Cup -----> Coppe
 06 Sei 		|	
