@@ -78,18 +78,38 @@ public class PlayerMessageHandler
             {
                 String[] metaMessage = message.split(":", 3);
                 Lobby lobby = TrumpMasterServer.GetLobbyById(Integer.getInteger(metaMessage[1]));
-                if(lobby == null)
+                if (lobby == null)
                 {
                     WriteToClient(player, "<PlayerSettings>LoginRefused:Lobby Not Found");
                     return;
                 }
                 //Create the login function in the lobby class
+                int result = lobby.LogInToLobby(player, metaMessage[2]);
+                String msgToSend = "<PlayerSettings>";
+                switch (result)
+                {
+                    case 2:
+                        msgToSend += "LoginRefused:" + "The Room is full";
+                        break;
+                    case 1:
+                        msgToSend += "LoginRefused:" + "Wrong password";
+                        break;
+                    case 0:
+                        msgToSend += "LoginAccepted";
+                        break;
+                }
+                WriteToClient(player, msgToSend);
                 //And Finish the statement
                 return;
             }
+            if(message.equals("SignUp"))
+            {
+              String[] metaMessage = message.split(":", 3);
+              
+            }
         }
     }
-    
+
     public void WriteToClient(UserPlayer player, String msg)
     {
         PlayerMessageWriter.getInstace().WriteMessage(player, msg);
