@@ -5,17 +5,31 @@
  */
 package trumpmasterserver;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author d.gozzi
  */
-public class TrumpMasterServer {
+public class TrumpMasterServer
+{
+
+    public static ArrayList<Lobby> lobbyList;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         // TODO code application logic here
     }
     
+    public static Lobby GetLobbyById(int id)
+    {
+        for (Lobby lobby : lobbyList)
+        {
+            return lobby;
+        }
+        return null;
+    }
 }

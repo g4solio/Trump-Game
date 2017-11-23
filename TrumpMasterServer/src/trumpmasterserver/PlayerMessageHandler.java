@@ -64,7 +64,35 @@ public class PlayerMessageHandler
                 player.Login(metaMessage[1]);
                 return;
             }
+            if (message.equals("ListOfRooms"))
+            {
+                String responseToClient = "<PlayerSettings>AvailableRooms";
+                for (Lobby lobby : TrumpMasterServer.lobbyList)
+                {
+                    responseToClient += ":" + lobby.lobbyName + ":" + lobby.id;
+                }
+                WriteToClient(player, responseToClient);
+                return;
+            }
+            if (message.equals("AddMeToRoom"))
+            {
+                String[] metaMessage = message.split(":", 3);
+                Lobby lobby = TrumpMasterServer.GetLobbyById(Integer.getInteger(metaMessage[1]));
+                if(lobby == null)
+                {
+                    WriteToClient(player, "<PlayerSettings>LoginRefused:Lobby Not Found");
+                    return;
+                }
+                //Create the login function in the lobby class
+                //And Finish the statement
+                return;
+            }
         }
+    }
+    
+    public void WriteToClient(UserPlayer player, String msg)
+    {
+        PlayerMessageWriter.getInstace().WriteMessage(player, msg);
     }
 
 }

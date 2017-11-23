@@ -5,7 +5,7 @@ FromClientToMasterServer
 		-ListOfRooms
 		-AddMeToRoom:[idRoom]:[passwordStanza]
 		-SignUp:[username]:[password]
-		-CreateARoom:[NomeRoom]:[NumeroPlayer]:[Password]
+		-CreateARoom:[NomeRoom]:[NumeroPlayer]:[Password]:[port]
 		-RoomHasBeenClosed
 		-ChangeFaction:[NewFaction]
 		-ReadyToPlay
@@ -13,7 +13,7 @@ FromClientToMasterServer
 	<GameInteraction>
 		-DroppedACard:[Card]
 		-RequireAlliedCard
-FromServerToClient
+FromMaterServerToClient
 	<Comunication>[NickName]:msg
 	<PlayerSettings>
 		-LoginAccepted
@@ -35,6 +35,9 @@ FromServerToClient
 		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 					//ToAll
 		-CatchACard:[Card]
 		-ShowAlliesCards:[Cards]								//TOAllyFaction
+
+
+All Game Interaction Are Game(Not Master) Server computated
 
 
 
