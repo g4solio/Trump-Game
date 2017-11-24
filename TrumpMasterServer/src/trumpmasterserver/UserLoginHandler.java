@@ -21,24 +21,24 @@ import org.json.simple.parser.ParseException;
  *
  * @author daddi
  */
-public class UserHandler
+public class UserLoginHandler
 {
 
-    public static UserHandler instance = null;
-    public ArrayList<String> registeredUserName;
-    public ArrayList<String> registeredPassword;
+    public static UserLoginHandler instance = null;
+    public ArrayList<String> registeredUserNames;
+    public ArrayList<String> registeredPasswords;
     public final String fileLocation = "";
 
-    public UserHandler getInstance()
+    public UserLoginHandler getInstance()
     {
         if (instance == null)
         {
-            new UserHandler();
+            new UserLoginHandler();
         }
         return instance;
     }
 
-    public UserHandler()
+    public UserLoginHandler()
     {
 
         if (instance != null)
@@ -47,10 +47,40 @@ public class UserHandler
         }
 
         instance = this;
-        registeredUserName = new ArrayList<>();
-        registeredPassword = new ArrayList<>();
+        registeredUserNames = new ArrayList<>();
+        registeredPasswords = new ArrayList<>();
+        LoadData();
     }
 
+    // 0 -----> va bene
+    // 1------> password Sbagliata
+    // 2 -----> utente non esiste
+    public int Login(String username, String password)
+    {
+        for (String registeredUserName : registeredUserNames)
+        {
+            if(!registeredUserName.equals(username)) continue;
+            if(registeredPasswords.get(registeredUserNames.indexOf(registeredUserName)).equals(password)) return 0;
+            return 1;
+        }
+        return 2;
+    }
+    
+    // 0 -------> tutto bene
+    // 1 -------> utente gia esistente
+    public int SignUp(String username, String password)
+    {
+        for (String registeredUserName : registeredUserNames)
+        {
+            if(!registeredUserName.equals(username)) continue;
+            return 1;
+        }
+        registeredUserNames.add(username);
+        registeredPasswords.add(password);
+        SaveData();
+        return 0;
+    }
+    
     //Users
     //Password
     public void LoadData()
@@ -66,14 +96,14 @@ public class UserHandler
             JSONArray usernames = (JSONArray) jSonObject.get("Users");
             for (Object username : usernames)
             {
-                registeredPassword.add(String.valueOf(username));
+                registeredPasswords.add(String.valueOf(username));
             }
             
             JSONArray passwords = (JSONArray) jSonObject.get("Passwords");
             
             for (Object password : passwords)
             {
-                registeredPassword.add(String.valueOf(password));
+                registeredPasswords.add(String.valueOf(password));
             }
         } 
         catch (FileNotFoundException ex)
@@ -95,18 +125,18 @@ public class UserHandler
     public void SaveData()
     {
         JSONObject jSonObject = new JSONObject();
-        JSONArray usersList = new JSONArray(registeredUserName);
-        JSONArray passwordList = new JSONArray(registeredPassword);
+        JSONArray usersList = new JSONArray(registeredUserNames);
+        JSONArray passwordList = new JSONArray(registeredPasswords);
         jSonObject.put("Users", usersList);
         jSonObject.put("Passwords", passwordList);
         
         
         try
         {
-            FileWriter jsonFileWriter = new FileWriter(fileLocation);
+            FileWriter jsonFileWriter = new FileWriter(fileLocation, false);
             jsonFileWriter.write(jSonObject.toJSONString());
             jsonFileWriter.flush();
-            
+            jsonFileWriter.close();
         } catch (IOException ex)
         {
             System.out.println("Error Writing Json " + ex);

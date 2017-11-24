@@ -59,14 +59,26 @@ public class PlayerMessageHandler
             if (message.equals("Login"))
             {
                 String[] metaMessage = message.split(":", 3);
-                //Check if the credentials are correct
-                //then
-                player.Login(metaMessage[1]);
+                int loginResult = GetUserLoginHandler().Login(metaMessage[1], metaMessage[1]);
+
+                switch (loginResult)
+                {
+                    case 0:
+                        WriteToClient(player, "<PlayerSettings>" + "LoginAccepted");
+                        player.Login(metaMessage[1]);
+                        break;
+                    case 1:
+                        WriteToClient(player, "<PlayerSettings>" + "LoginRefused:" + "Wrong password");
+                        break;
+                    case 2:
+                        WriteToClient(player, "<PlayerSettings>" + "LoginRefused:" + "User not registered");
+                        break;
+                }
                 return;
             }
-            if (message.equals("ListOfRooms"))
+            if (message.equals("ListOfLobbies"))
             {
-                String responseToClient = "<PlayerSettings>AvailableRooms";
+                String responseToClient = "<PlayerSettings>AvailableLobbies";
                 for (Lobby lobby : TrumpMasterServer.lobbyList)
                 {
                     responseToClient += ":" + lobby.lobbyName + ":" + lobby.id;
@@ -74,7 +86,7 @@ public class PlayerMessageHandler
                 WriteToClient(player, responseToClient);
                 return;
             }
-            if (message.equals("AddMeToRoom"))
+            if (message.equals("AddMeToLobby"))
             {
                 String[] metaMessage = message.split(":", 3);
                 Lobby lobby = TrumpMasterServer.GetLobbyById(Integer.getInteger(metaMessage[1]));
@@ -89,7 +101,7 @@ public class PlayerMessageHandler
                 switch (result)
                 {
                     case 2:
-                        msgToSend += "LoginRefused:" + "The Room is full";
+                        msgToSend += "LoginRefused:" + "The Lobby is full";
                         break;
                     case 1:
                         msgToSend += "LoginRefused:" + "Wrong password";
@@ -102,17 +114,46 @@ public class PlayerMessageHandler
                 //And Finish the statement
                 return;
             }
-            if(message.equals("SignUp"))
+            if (message.equals("SignUp"))
             {
-              String[] metaMessage = message.split(":", 3);
-              
+                String[] metaMessage = message.split(":", 3);
+
+                int signUpResult = GetUserLoginHandler().SignUp(metaMessage[1], metaMessage[2]);
+                String msgToSend = "<PlayerSettings>";
+                switch (signUpResult)
+                {
+                    case 0:
+                        msgToSend += "SignUpAccepted";
+                        break;
+                    case 1:
+                        msgToSend += "SingUpRefused:NickName has already been taken";
+                        break;
+                }
+                WriteToClient(player, msgToSend);
+                return;
             }
         }
-    }
+        if (message.equals("CreateALobby"))
+        {
+            String[] metaMessage = message.split(":", 4);
 
+            TrumpMasterServer.CreteALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
+            WriteToClient(player, "<PlayerSettings>LobbyCreatedSuccesfully");
+            return;
+        }
+    }
+    
+    
+    
+    
     public void WriteToClient(UserPlayer player, String msg)
     {
         PlayerMessageWriter.getInstace().WriteMessage(player, msg);
+    }
+
+    public UserLoginHandler GetUserLoginHandler()
+    {
+        return UserLoginHandler.instance.getInstance();
     }
 
 }

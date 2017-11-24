@@ -2,11 +2,11 @@ FromClientToMasterServer
 	<Comunication>[NickName]:msg
 	<PlayerSettings>
 		-Login:[username]:[password]
-		-ListOfRooms
-		-AddMeToRoom:[idRoom]:[passwordStanza]
+		-ListOfLobbies
+		-AddMeToLobby:[idLobby]:[passwordStanza]
 		-SignUp:[username]:[password]
-		-CreateARoom:[NomeRoom]:[NumeroPlayer]:[Password]:[port]
-		-RoomHasBeenClosed
+		-CreateALobby:[NomeLobby]:[NumeroPlayer]:[Password]:[port]
+		-LobbyHasBeenClosed
 		-ChangeFaction:[NewFaction]
 		-ReadyToPlay
 		-NotReadyToPlay
@@ -18,13 +18,13 @@ FromMaterServerToClient
 	<PlayerSettings>
 		-LoginAccepted
 		-LoginRefused:[reason]
-		-AvailableRooms:[NameRoom]:[idRoom]:[MaxPlayer]:[JoinedPlayer]
+		-AvailableLobbies:[NameLobby]:[idLobby]:[MaxPlayer]:[JoinedPlayer]
 		-SignUpAccepted
 		-SingUpRefused:[reasons]
-		-RoomCreatedSuccesfully
-		-PlayerJoinedRoom:[NickNamePlayer]
-		-PlayerAbandonedRoom:[NickName]
-		-RoomHasBeenClosed
+		-LobbyCreatedSuccesfully
+		-PlayerJoinedLobby:[NickNamePlayer]
+		-PlayerAbandonedLobby:[NickName]
+		-LobbyHasBeenClosed
 		-ChangeFactions:[Player]:[NewFaction]
 		-GameHasBeenStarted
 		-ReadyToPlay:[NickName]
