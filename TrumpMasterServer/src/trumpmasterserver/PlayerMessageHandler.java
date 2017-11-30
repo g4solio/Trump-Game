@@ -107,7 +107,10 @@ public class PlayerMessageHandler
                         msgToSend += "LoginRefused:" + "Wrong password";
                         break;
                     case 0:
-                        msgToSend += "LoginAccepted";
+                        msgToSend += "LoginAccepted:RedFaction";
+                        break;
+                    case 3:
+                        msgToSend += "LoginAccepted:BlueFaction";
                         break;
                 }
                 WriteToClient(player, msgToSend);
@@ -135,17 +138,43 @@ public class PlayerMessageHandler
         }
         if (message.equals("CreateALobby"))
         {
-            String[] metaMessage = message.split(":", 4);
+            String[] metaMessage = message.split(":", 5);
 
             TrumpMasterServer.CreteALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
             WriteToClient(player, "<PlayerSettings>LobbyCreatedSuccesfully");
             return;
         }
+        if (message.equals("LobbyHasBeenClosed"))
+        {
+            TrumpMasterServer.CloseLobby(player.lobbyJoined);
+            //WriteToClient(player, "<PlayerSettings>LobbyHasBeenClosed");
+            return;
+        }
+        if (message.equals("ChangeFaction"))
+        {
+            String[] metaMessage = message.split(":", 2);
+            int result = player.lobbyJoined.ChangeFaction(player, metaMessage[1]);
+
+            String msgToSend = "<PlayerSettings>";
+
+            switch (result)
+            {
+                case 0:
+                    msgToSend += "FactionChangedSuccesfully";
+                    break;
+                case 1:
+                    msgToSend += "ErrorChangingFaction";
+                    break;
+            }
+            WriteToClient(player, msgToSend);
+            if(result == 0)
+            {
+                player.lobbyJoined.RefreshFactionChange(player, metaMessage[1]);
+            }
+            return;
+        }
     }
-    
-    
-    
-    
+
     public void WriteToClient(UserPlayer player, String msg)
     {
         PlayerMessageWriter.getInstace().WriteMessage(player, msg);

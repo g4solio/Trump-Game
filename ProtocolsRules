@@ -16,15 +16,17 @@ FromClientToMasterServer
 FromMaterServerToClient
 	<Comunication>[NickName]:msg
 	<PlayerSettings>
-		-LoginAccepted
+		-LoginAccepted:[Faction]
 		-LoginRefused:[reason]
 		-AvailableLobbies:[NameLobby]:[idLobby]:[MaxPlayer]:[JoinedPlayer]
 		-SignUpAccepted
 		-SingUpRefused:[reasons]
 		-LobbyCreatedSuccesfully
-		-PlayerJoinedLobby:[NickNamePlayer]
+		-PlayerJoinedLobby:[NickNamePlayer]:[Faction]
 		-PlayerAbandonedLobby:[NickName]
 		-LobbyHasBeenClosed
+		-FactionChangedSuccesfully
+		-ErrorChangingFaction
 		-ChangeFactions:[Player]:[NewFaction]
 		-GameHasBeenStarted
 		-ReadyToPlay:[NickName]
@@ -35,11 +37,12 @@ FromMaterServerToClient
 		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 					//ToAll
 		-CatchACard:[Card]
 		-ShowAlliesCards:[Cards]								//TOAllyFaction
+		-TableHasBeenSettedUp:[Briscola]
 
 
 All Game Interaction Are Game(Not Master) Server computated
 
-
+Factions: RedFaction, BlueFaction;
 
 Cards
 01 Asso		|	G -----> Gold -----> Denari

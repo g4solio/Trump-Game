@@ -54,6 +54,12 @@ public class TrumpMasterServer
 
     }
 
+    public static void CloseLobby(Lobby lobby)
+    {
+        lobby.CloseLobby();
+        lobbyList.remove(lobby);
+    }
+    
     private static int GenerateRoomId()
     {
         int bound = 100 + lobbyList.size();
