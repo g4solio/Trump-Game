@@ -5,6 +5,9 @@
  */
 package trumpmasterserver;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,7 +35,26 @@ public class TrumpMasterServer
      */
     public static void main(String[] args)
     {
-        // TODO code application logic here
+
+        lobbyList = new ArrayList<>();
+        try
+        {
+            // TODO code application logic here
+            ServerSocket serverSocket = new ServerSocket(1050);
+            System.out.println("Server Has Been Started");
+            while (true)
+            {
+                Socket socket = serverSocket.accept();
+                System.out.println("A new Connection has been accepted");
+                new UserPlayer(socket);
+            }
+
+        }
+        catch (IOException ex)
+        {
+            System.out.println("error Starting Server " + ex);
+        }
+
     }
 
     public static Lobby GetLobbyById(int id)
@@ -59,7 +81,7 @@ public class TrumpMasterServer
         lobby.CloseLobby();
         lobbyList.remove(lobby);
     }
-    
+
     private static int GenerateRoomId()
     {
         int bound = 100 + lobbyList.size();

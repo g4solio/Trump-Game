@@ -81,6 +81,7 @@ public class PlayerMessageHandler
                 String responseToClient = "<PlayerSettings>AvailableLobbies";
                 for (Lobby lobby : TrumpMasterServer.lobbyList)
                 {
+                    if(lobby.isTheMatchStarted) continue;
                     responseToClient += ":" + lobby.lobbyName + ":" + lobby.id;
                 }
                 WriteToClient(player, responseToClient);
@@ -113,6 +114,7 @@ public class PlayerMessageHandler
                         msgToSend += "LoginAccepted:BlueFaction";
                         break;
                 }
+
                 WriteToClient(player, msgToSend);
                 //And Finish the statement
                 return;
@@ -167,10 +169,35 @@ public class PlayerMessageHandler
                     break;
             }
             WriteToClient(player, msgToSend);
-            if(result == 0)
+            if (result == 0)
             {
                 player.lobbyJoined.RefreshFactionChange(player, metaMessage[1]);
             }
+            return;
+        }
+        if (message.equals("ReadyToPlay"))
+        {
+            player.lobbyJoined.NotifyReadyToPlay(player, true);
+            return;
+        }
+        if (message.equals("NotReadyToPlay"))
+        {
+            player.lobbyJoined.NotifyReadyToPlay(player, false);
+            return;
+        }
+        if (message.equals("RemoveMeFromRoom"))
+        {
+            player.lobbyJoined.RemovePlayerFromRoom(player);
+            return;
+        }
+        if (message.equals("Disconnecting"))
+        {
+            player.Disconnect();
+            return;
+        }
+        if (message.equals("StartTheMath"))
+        {
+            player.lobbyJoined.StartTheMatch();
             return;
         }
     }

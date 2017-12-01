@@ -25,11 +25,13 @@ public class Lobby
     public String lobbyName;
     public String password;
     public int id;
-    public Socket gameServerSocket;
+    public GameServer gameServer;
     public int numMaxPlayer;
+    public boolean isTheMatchStarted;
 
     public Lobby(int generatedId, String name, String generatedPassword, String gameServerIp, int gameServerPort, int numMaxPlayerFromClient)
     {
+        isTheMatchStarted = false;
         redFaction = new ArrayList<>();
         blueFaction = new ArrayList<>();
 
@@ -38,7 +40,7 @@ public class Lobby
         password = generatedPassword;
         try
         {
-            gameServerSocket = new Socket(InetAddress.getByName(gameServerIp), gameServerPort);
+            gameServer = new GameServer(new Socket(InetAddress.getByName(gameServerIp), gameServerPort), this);
         }
         catch (IOException ex)
         {
@@ -62,6 +64,7 @@ public class Lobby
         {
             return 2;
         }
+
         if (redFaction.size() >= numMaxPlayer / 2)
         {
             blueFaction.add(player);
@@ -72,6 +75,16 @@ public class Lobby
             redFaction.add(player);
         }
         player.lobbyJoined = this;
+
+        String msgToSend = "<PlayerSettings>PlayerJoinedLobby:" + player.nickName + ":" + (returnValue == 0 ? "RedFaction" : "BlueFaction");
+        for (UserPlayer factionedPlayer : redFaction)
+        {
+            PlayerMessageWriter().WriteMessage(factionedPlayer, msgToSend);
+        }
+        for (UserPlayer factionedPlayer : blueFaction)
+        {
+            PlayerMessageWriter().WriteMessage(factionedPlayer, msgToSend);
+        }
         return returnValue;
     }
 
@@ -87,14 +100,9 @@ public class Lobby
             connectedPlayer.lobbyJoined = null;
             PlayerMessageWriter().WriteMessage(connectedPlayer, "<PlayerSettings>LobbyHasBeenClosed");
         }
-        try
-        {
-            gameServerSocket.close();
-        }
-        catch (IOException ex)
-        {
-            System.out.println("Error closing Lobby " + ex);
-        }
+
+        gameServer.Disconnect();
+
     }
 
     // 0 ----> All good
@@ -138,10 +146,66 @@ public class Lobby
             PlayerMessageWriter().WriteMessage(connectedPlayer, msgToSend);
         }
     }
-    
+
     public PlayerMessageWriter PlayerMessageWriter()
     {
         return PlayerMessageWriter.getInstace();
+    }
+
+    public void NotifyReadyToPlay(UserPlayer playerReady, boolean readyToPlay)
+    {
+        String msgToSend = "<PlayerSettings>";
+        msgToSend += readyToPlay ? "ReadyToPlay" : "NotReadyToPlay";
+        msgToSend += playerReady.nickName;
+        for (UserPlayer redPlayer : redFaction)
+        {
+            PlayerMessageWriter().WriteMessage(redPlayer, msgToSend);
+        }
+        for (UserPlayer bluePlayer : blueFaction)
+        {
+            PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
+        }
+    }
+
+    void RemovePlayerFromRoom(UserPlayer player)
+    {
+        if (redFaction.contains(player))
+        {
+            redFaction.remove(player);
+        }
+        else
+        {
+            blueFaction.remove(player);
+        }
+        String msgToSend = "<PlayerSettings>PlayerAbandonedLobby" + player.nickName;
+        for (UserPlayer redPlayer : redFaction)
+        {
+            PlayerMessageWriter().WriteMessage(redPlayer, msgToSend);
+        }
+        for (UserPlayer bluePlayer : blueFaction)
+        {
+            PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
+        }
+        return;
+    }
+
+    public void StartTheMatch()
+    {
+        isTheMatchStarted = true;
+
+    }
+
+    public void SendToAllClient(String msg)
+    {
+        for (UserPlayer redPlayer : redFaction)
+        {
+            PlayerMessageWriter().WriteMessage(redPlayer, msg);
+        }
+        for (UserPlayer bluePlayer : blueFaction)
+        {
+            PlayerMessageWriter().WriteMessage(bluePlayer, msg);
+        }
+        return;
     }
 
 }

@@ -47,14 +47,16 @@ public class UserPlayer extends Thread
         {
             try
             {
-                readFromClient.readLine();
+                PlayerMessageHandler.getInstace().HandleMessage(this, readFromClient.readLine());
             }
             catch (IOException ex)
             {
                 System.out.println("Error reading From Socket " + ex);
+                Disconnect();
             }
         }
         while (isLogged);
+        Disconnect();
     }
 
     public void Login(String loggedNickName)
@@ -62,5 +64,26 @@ public class UserPlayer extends Thread
         isLogged = true;
         nickName = loggedNickName;
     }
-
+    public void Disconnect()
+    {
+        try
+        {
+            System.out.println("Disconnecting");
+            connectedSocket.close();
+            if(lobbyJoined != null)lobbyJoined.RemovePlayerFromRoom(this);
+            isLogged = false;
+            writerToClient.close();
+            readFromClient.close();
+            this.join();
+            
+        } catch (IOException ex)
+        {
+            System.out.println("Error disconnect client " + ex);
+        } catch (InterruptedException ex)
+        {
+            System.out.println("Error disconnect client " + ex);
+        }
+        return;
+    }
 }
+

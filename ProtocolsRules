@@ -10,6 +10,9 @@ FromClientToMasterServer
 		-ChangeFaction:[NewFaction]
 		-ReadyToPlay
 		-NotReadyToPlay
+		-RemoveMeFromRoom
+		-StartTheMatch
+		-Disconnecting
 	<GameInteraction>
 		-DroppedACard:[Card]
 		-RequireAlliedCard
@@ -22,7 +25,7 @@ FromMaterServerToClient
 		-SignUpAccepted
 		-SingUpRefused:[reasons]
 		-LobbyCreatedSuccesfully
-		-PlayerJoinedLobby:[NickNamePlayer]:[Faction]
+		-PlayerJoinedLobby:[NickNamePlayer]:[Faction]	//could be yourself
 		-PlayerAbandonedLobby:[NickName]
 		-LobbyHasBeenClosed
 		-FactionChangedSuccesfully
@@ -31,6 +34,7 @@ FromMaterServerToClient
 		-GameHasBeenStarted
 		-ReadyToPlay:[NickName]
 		-NotReadyToPlay:[NickName]
+		-MatchStarted
 	<GameInteraction>
 		-CardHasBeenDropped:[NickName]:[Card] 							//ToAll
 		-PlayerPickedUP:[NickName] 								//ToAll
