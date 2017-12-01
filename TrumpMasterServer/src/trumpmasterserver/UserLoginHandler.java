@@ -27,7 +27,7 @@ public class UserLoginHandler
     public static UserLoginHandler instance = null;
     public ArrayList<String> registeredUserNames;
     public ArrayList<String> registeredPasswords;
-    public final String fileLocation = "";
+    public final String fileLocation = "LoginList.txt";
 
     public UserLoginHandler getInstance()
     {
