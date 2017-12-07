@@ -51,6 +51,7 @@ public class PlayerMessageHandler
             {
                 System.out.println("That sould never happen");
             }
+            player.lobbyJoined.SendToAllClient(msg);
             //SendMsg
             return;
         }
