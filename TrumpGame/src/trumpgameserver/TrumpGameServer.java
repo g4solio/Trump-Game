@@ -5,7 +5,10 @@
  */
 package trumpgameserver;
 
+import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +21,8 @@ public class TrumpGameServer extends Thread
     // <editor-fold desc="Variables" defaultstate="collapsed">
     public ServerSocket serverSocket; 
     public boolean serverIsRunning;
+    public final int PORT = 62131;
+    public int numMaxPlayer;
     // </editor-fold>
             
             
@@ -36,6 +41,13 @@ public class TrumpGameServer extends Thread
         if(instance != null) return;
         instance = this;
         serverIsRunning = true;
+        try 
+        {
+            serverSocket = new ServerSocket(PORT);
+        } catch (IOException ex) 
+        {
+            Logger.getLogger(TrumpGameServer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.start();
     }
 
@@ -45,7 +57,14 @@ public class TrumpGameServer extends Thread
         super.run(); 
         while (serverIsRunning)
         {
-            
+            try 
+            {
+                serverSocket.accept();
+                
+            } catch (IOException ex) 
+            {
+                Logger.getLogger(TrumpGameServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     
