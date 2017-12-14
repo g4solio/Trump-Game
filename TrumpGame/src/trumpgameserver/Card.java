@@ -5,21 +5,11 @@
  */
 package trumpgameserver;
 
-
 /**
  *
  * @author d.gozzi
  */
-public class Player 
+public class Card
 {
-    
-    Card[] hand;
-    
-    public Player() 
-    {
-    hand = new Card[3];
-             
-        
-    }
     
 }

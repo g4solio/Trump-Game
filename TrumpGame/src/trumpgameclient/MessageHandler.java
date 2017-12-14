@@ -9,26 +9,33 @@ package trumpgameclient;
  *
  * @author m.de stefano
  */
-public class MessageHandler {
+public class MessageHandler
+{
 
     public static MessageHandler instance = null;
 
-    public static MessageHandler getInstace() {
-        if (instance == null) {
+    public static MessageHandler getInstace()
+    {
+        if (instance == null)
+        {
             new MessageHandler();
         }
         return instance;
     }
 
-    public MessageHandler() {
-        if (instance != null) {
+    public MessageHandler()
+    {
+        if (instance != null)
+        {
             return;
         }
         instance = this;
     }
 
-    public void HandleMessage(String msg) {
-        if (msg.equals("") || msg.equals(" ") || msg == null) {
+    public void HandleMessage(String msg)
+    {
+        if (msg.equals("") || msg.equals(" ") || msg == null)
+        {
             return;
         }
         System.out.println("Handling msg: " + msg);
@@ -36,74 +43,92 @@ public class MessageHandler {
 
         String tipeOfMessage = splittedMsg[0];
         String message = splittedMsg[1];
-        if (tipeOfMessage.contains("Communication")) {
+        if (tipeOfMessage.contains("Communication"))
+        {
 
             return;
         }
-        if (tipeOfMessage.contains("PlayerSettings")) {
+        if (tipeOfMessage.contains("PlayerSettings"))
+        {
 
             /////////
-            if (message.equals("LoginAccepted")) {
+            if (message.equals("LoginAccepted"))
+            {
 
                 return;
             }
-            if (message.equals("LoginRefused")) {
+            if (message.equals("LoginRefused"))
+            {
 
                 return;
             }
-            if (message.equals("AvailableLobbies")) {
+            if (message.equals("AvailableLobbies"))
+            {
 
                 return;
             }
-            if (message.equals("SignUpAccepted")) {
+            if (message.equals("SignUpAccepted"))
+            {
 
                 return;
             }
 
-            if (message.equals("SingUpRefused")) {
+            if (message.equals("SingUpRefused"))
+            {
 
                 return;
             }
-            if (message.equals("LobbyCreatedSuccesfully")) {
+            if (message.equals("LobbyCreatedSuccesfully"))
+            {
 
                 return;
             }
-            if (message.equals("PlayerJoinedLobby")) {
+            if (message.equals("PlayerJoinedLobby"))
+            {
 
                 return;
             }
-            if (message.equals("PlayerAbandonedLobby")) {
+            if (message.equals("PlayerAbandonedLobby"))
+            {
                 return;
             }
-            if (message.equals("LobbyHasBeenClosed")) {
+            if (message.equals("LobbyHasBeenClosed"))
+            {
 
                 return;
             }
-            if (message.equals("FactionChangedSuccesfully")) {
+            if (message.equals("FactionChangedSuccesfully"))
+            {
 
                 return;
             }
-            if (message.equals("ErrorChangingFaction")) {
+            if (message.equals("ErrorChangingFaction"))
+            {
 
                 return;
             }
-            if (message.equals("ChangeFactions")) {
+            if (message.equals("ChangeFactions"))
+            {
 
                 return;
             }
-            if (message.equals("GameHasBeenStarted")) {
+            if (message.equals("GameHasBeenStarted"))
+            {
 
                 return;
             }
-            if (message.equals("ReadyToPlay")) {
+            if (message.equals("ReadyToPlay"))
+            {
 
                 return;
             }
-            if (message.equals("NotReadyToPlay")) {
+            if (message.equals("NotReadyToPlay"))
+            {
 
                 return;
             }
-            if (message.equals("MatchStarted")) {
+            if (message.equals("MatchStarted"))
+            {
 
                 return;
             }

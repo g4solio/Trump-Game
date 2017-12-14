@@ -82,7 +82,10 @@ public class PlayerMessageHandler
                 String responseToClient = "<PlayerSettings>AvailableLobbies";
                 for (Lobby lobby : TrumpMasterServer.lobbyList)
                 {
-                    if(lobby.isTheMatchStarted) continue;
+                    if (lobby.isTheMatchStarted)
+                    {
+                        continue;
+                    }
                     responseToClient += ":" + lobby.lobbyName + ":" + lobby.id;
                 }
                 WriteToClient(player, responseToClient);
@@ -138,68 +141,69 @@ public class PlayerMessageHandler
                 WriteToClient(player, msgToSend);
                 return;
             }
-        }
-        if (message.equals("CreateALobby"))
-        {
-            String[] metaMessage = message.split(":", 5);
 
-            TrumpMasterServer.CreteALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
-            WriteToClient(player, "<PlayerSettings>LobbyCreatedSuccesfully");
-            return;
-        }
-        if (message.equals("LobbyHasBeenClosed"))
-        {
-            TrumpMasterServer.CloseLobby(player.lobbyJoined);
-            //WriteToClient(player, "<PlayerSettings>LobbyHasBeenClosed");
-            return;
-        }
-        if (message.equals("ChangeFaction"))
-        {
-            String[] metaMessage = message.split(":", 2);
-            int result = player.lobbyJoined.ChangeFaction(player, metaMessage[1]);
-
-            String msgToSend = "<PlayerSettings>";
-
-            switch (result)
+            if (message.equals("CreateALobby"))
             {
-                case 0:
-                    msgToSend += "FactionChangedSuccesfully";
-                    break;
-                case 1:
-                    msgToSend += "ErrorChangingFaction";
-                    break;
+                String[] metaMessage = message.split(":", 5);
+
+                TrumpMasterServer.CreteALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
+                WriteToClient(player, "<PlayerSettings>LobbyCreatedSuccesfully");
+                return;
             }
-            WriteToClient(player, msgToSend);
-            if (result == 0)
+            if (message.equals("LobbyHasBeenClosed"))
             {
-                player.lobbyJoined.RefreshFactionChange(player, metaMessage[1]);
+                TrumpMasterServer.CloseLobby(player.lobbyJoined);
+                //WriteToClient(player, "<PlayerSettings>LobbyHasBeenClosed");
+                return;
             }
-            return;
-        }
-        if (message.equals("ReadyToPlay"))
-        {
-            player.lobbyJoined.NotifyReadyToPlay(player, true);
-            return;
-        }
-        if (message.equals("NotReadyToPlay"))
-        {
-            player.lobbyJoined.NotifyReadyToPlay(player, false);
-            return;
-        }
-        if (message.equals("RemoveMeFromRoom"))
-        {
-            player.lobbyJoined.RemovePlayerFromRoom(player);
-            return;
-        }
-        if (message.equals("Disconnecting"))
-        {
-            player.Disconnect();
-            return;
-        }
-        if (message.equals("StartTheMath"))
-        {
-            player.lobbyJoined.StartTheMatch();
-            return;
+            if (message.equals("ChangeFaction"))
+            {
+                String[] metaMessage = message.split(":", 2);
+                int result = player.lobbyJoined.ChangeFaction(player, metaMessage[1]);
+
+                String msgToSend = "<PlayerSettings>";
+
+                switch (result)
+                {
+                    case 0:
+                        msgToSend += "FactionChangedSuccesfully";
+                        break;
+                    case 1:
+                        msgToSend += "ErrorChangingFaction";
+                        break;
+                }
+                WriteToClient(player, msgToSend);
+                if (result == 0)
+                {
+                    player.lobbyJoined.RefreshFactionChange(player, metaMessage[1]);
+                }
+                return;
+            }
+            if (message.equals("ReadyToPlay"))
+            {
+                player.lobbyJoined.NotifyReadyToPlay(player, true);
+                return;
+            }
+            if (message.equals("NotReadyToPlay"))
+            {
+                player.lobbyJoined.NotifyReadyToPlay(player, false);
+                return;
+            }
+            if (message.equals("RemoveMeFromRoom"))
+            {
+                player.lobbyJoined.RemovePlayerFromRoom(player);
+                return;
+            }
+            if (message.equals("Disconnecting"))
+            {
+                player.Disconnect();
+                return;
+            }
+            if (message.equals("StartTheMath"))
+            {
+                player.lobbyJoined.StartTheMatch();
+                return;
+            }
         }
     }
 
