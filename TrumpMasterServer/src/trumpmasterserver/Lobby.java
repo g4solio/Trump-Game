@@ -155,7 +155,7 @@ public class Lobby
     public void NotifyReadyToPlay(UserPlayer playerReady, boolean readyToPlay)
     {
         String msgToSend = "<PlayerSettings>";
-        msgToSend += readyToPlay ? "ReadyToPlay" : "NotReadyToPlay";
+        msgToSend += readyToPlay ? "ReadyToPlay:" : "NotReadyToPlay:";
         msgToSend += playerReady.nickName;
         for (UserPlayer redPlayer : redFaction)
         {
@@ -165,6 +165,7 @@ public class Lobby
         {
             PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
         }
+        
     }
 
     void RemovePlayerFromRoom(UserPlayer player)

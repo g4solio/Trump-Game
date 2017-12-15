@@ -5,21 +5,29 @@
  */
 package trumpgameserver;
 
+import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  *
  * @author d.gozzi
  */
-public class Player 
+public class Player extends Thread
 {
-    
-    Card[] hand;
-    
-    public Player() 
+
+    public Card[] hand;
+    public Socket playerSocket;
+    ArrayList<Card> OwnedCards;
+    public String nickname;
+
+    public Player(Socket socket)
     {
-    hand = new Card[3];
-             
+        hand = new Card[3];
+        playerSocket = socket;
+        OwnedCards = new ArrayList<>();
         
     }
     
+   
+
 }

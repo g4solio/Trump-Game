@@ -23,6 +23,8 @@ public class TrumpGameServer extends Thread
     public boolean serverIsRunning;
     public final int PORT = 62131;
     public int numMaxPlayer;
+    public static GameMechanics gameMechanics;
+    
     // </editor-fold>
             
             
@@ -48,6 +50,7 @@ public class TrumpGameServer extends Thread
         {
             Logger.getLogger(TrumpGameServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        gameMechanics = new GameMechanics();
         this.start();
     }
 
@@ -68,5 +71,8 @@ public class TrumpGameServer extends Thread
         }
     }
     
-    
+    public void SendGameMessage(String message)
+    {
+        
+    }
 }

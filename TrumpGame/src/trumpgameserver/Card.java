@@ -11,5 +11,21 @@ package trumpgameserver;
  */
 public class Card
 {
+    public String seed;
+    public String number;
+
+    public Card(String seedGenerated, String numberGenerated)
+    {
+        seed = seedGenerated;
+        number = numberGenerated;
+    }
+
+    @Override
+    public String toString()
+    {
+        //return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return number + seed;
+    }
+    
     
 }
