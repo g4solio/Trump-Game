@@ -85,6 +85,7 @@ public class Lobby
         {
             PlayerMessageWriter().WriteMessage(factionedPlayer, msgToSend);
         }
+        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
         return returnValue;
     }
 
@@ -100,7 +101,7 @@ public class Lobby
             connectedPlayer.lobbyJoined = null;
             PlayerMessageWriter().WriteMessage(connectedPlayer, "<PlayerSettings>LobbyHasBeenClosed");
         }
-
+        PlayerMessageWriter().WriteMessage(gameServer, "<PlayerSettings>LobbyHasBeenClosed");
         gameServer.Disconnect();
 
     }
@@ -145,6 +146,7 @@ public class Lobby
             connectedPlayer.lobbyJoined = null;
             PlayerMessageWriter().WriteMessage(connectedPlayer, msgToSend);
         }
+        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
     }
 
     public PlayerMessageWriter PlayerMessageWriter()
@@ -165,7 +167,7 @@ public class Lobby
         {
             PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
         }
-        
+        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
     }
 
     void RemovePlayerFromRoom(UserPlayer player)
@@ -187,6 +189,7 @@ public class Lobby
         {
             PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
         }
+        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
         return;
     }
 
@@ -206,6 +209,8 @@ public class Lobby
         {
             PlayerMessageWriter().WriteMessage(bluePlayer, msg);
         }
+        //PlayerMessageWriter().WriteMessage(gameServer, msg);
+
         return;
     }
 

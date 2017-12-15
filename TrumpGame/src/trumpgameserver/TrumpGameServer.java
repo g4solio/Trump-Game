@@ -24,7 +24,7 @@ public class TrumpGameServer extends Thread
     public final int PORT = 62131;
     public int numMaxPlayer;
     public static GameMechanics gameMechanics;
-    
+    public ConnectionWithLobby connection;
     // </editor-fold>
             
             
@@ -62,7 +62,7 @@ public class TrumpGameServer extends Thread
         {
             try 
             {
-                serverSocket.accept();
+                connection = new ConnectionWithLobby(serverSocket.accept());
                 
             } catch (IOException ex) 
             {
@@ -73,6 +73,25 @@ public class TrumpGameServer extends Thread
     
     public void SendGameMessage(String message)
     {
-        
+        connection.Write("<GameInteraction>"+message);
+    }
+    
+    public void Close()
+    {
+        try 
+        {
+            serverSocket.close();
+            serverIsRunning = false;
+            this.join();
+            connection.Close();
+            
+        } catch (IOException ex)
+        {
+            System.out.println("Error closing socket " + ex);
+        } catch (InterruptedException ex) 
+        {
+            Logger.getLogger(TrumpGameServer.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
     }
 }

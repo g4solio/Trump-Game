@@ -36,12 +36,13 @@ FromMaterServerToClient
 		-NotReadyToPlay:[NickName]
 		-MatchStarted
 	<GameInteraction>
-		-CardHasBeenDropped:[NickName]:[Card] 							//ToAll
-		-PlayerPickedUP:[NickName] 								//ToAll
-		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 					//ToAll
-		-CatchACard:[Card]
-		-ShowAlliesCards:[Cards]								//TOAllyFaction
+		-CardHasBeenDropped:[NickName]:[Card] 							//
+		-PlayerPickedUP:[NickName] 								//
+		-TotalScore:[Faction1]:[Score1]:[Faction2]:[Score2] 					//
+		-CatchACard:[Card]:[Player]
+		-ShowAlliesCards:[Player]:[Card1]:[Card2]:[Card3]					//
 		-TableHasBeenSettedUp:[Briscola]
+		-HasToPlay:[Player]
 
 
 All Game Interaction Are Game(Not Master) Server computated

@@ -205,6 +205,10 @@ public class PlayerMessageHandler
                 return;
             }
         }
+        if (tipeOfMessage.contains("GameInteraction"))
+        {
+            WriteToClient(player.lobbyJoined.gameServer, msg);
+        }
     }
 
     public void WriteToClient(UserPlayer player, String msg)

@@ -16,15 +16,16 @@ public class Player extends Thread
 {
 
     public Card[] hand;
-    public Socket playerSocket;
     ArrayList<Card> OwnedCards;
     public String nickname;
+    public boolean playedThisTurn;
 
-    public Player(Socket socket)
+    public Player(String nicknameAssigned)
     {
         hand = new Card[3];
-        playerSocket = socket;
         OwnedCards = new ArrayList<>();
+        playedThisTurn = false;
+        nickname = nicknameAssigned;
         
     }
     
