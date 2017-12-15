@@ -33,7 +33,7 @@ public class UserPlayer extends Thread
         connectedSocket = socket;
         writerToClient = new PrintWriter(new OutputStreamWriter(connectedSocket.getOutputStream()));
         readFromClient = new BufferedReader(new InputStreamReader(connectedSocket.getInputStream()));
-        isLogged = false;
+        isLogged = true;
         this.start();
         return;
     }

@@ -66,7 +66,7 @@ public class TrumpMasterServer
         return null;
     }
 
-    public static void CreteALobby(UserPlayer player, String name, String generatedPassword, int gameServerPort, int numMaxPlayerFromClient)
+    public static void CreateALobby(UserPlayer player, String name, String generatedPassword, int gameServerPort, int numMaxPlayerFromClient)
     {
         int idRoom = GenerateRoomId();
         String ipAdress = player.connectedSocket.getInetAddress().getHostAddress();

@@ -57,11 +57,12 @@ public class PlayerMessageHandler
         }
         if (tipeOfMessage.contains("PlayerSettings"))
         {
-            if (message.equals("Login"))
+            if (message.contains("Login"))
             {
                 String[] metaMessage = message.split(":", 3);
-                int loginResult = GetUserLoginHandler().Login(metaMessage[1], metaMessage[1]);
-
+                //int loginResult = GetUserLoginHandler().Login(metaMessage[1], metaMessage[1]);
+                int loginResult = 0;
+                System.out.println("wow");
                 switch (loginResult)
                 {
                     case 0:
@@ -77,7 +78,7 @@ public class PlayerMessageHandler
                 }
                 return;
             }
-            if (message.equals("ListOfLobbies"))
+            if (message.contains("ListOfLobbies"))
             {
                 String responseToClient = "<PlayerSettings>AvailableLobbies";
                 for (Lobby lobby : TrumpMasterServer.lobbyList)
@@ -91,7 +92,7 @@ public class PlayerMessageHandler
                 WriteToClient(player, responseToClient);
                 return;
             }
-            if (message.equals("AddMeToLobby"))
+            if (message.contains("AddMeToLobby"))
             {
                 String[] metaMessage = message.split(":", 3);
                 Lobby lobby = TrumpMasterServer.GetLobbyById(Integer.getInteger(metaMessage[1]));
@@ -123,7 +124,7 @@ public class PlayerMessageHandler
                 //And Finish the statement
                 return;
             }
-            if (message.equals("SignUp"))
+            if (message.contains("SignUp"))
             {
                 String[] metaMessage = message.split(":", 3);
 
@@ -142,21 +143,24 @@ public class PlayerMessageHandler
                 return;
             }
 
-            if (message.equals("CreateALobby"))
+            if (message.contains("CreateALobby"))
             {
                 String[] metaMessage = message.split(":", 5);
-
-                TrumpMasterServer.CreteALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
+                for (String string : metaMessage) {
+                    System.out.println(string);
+                }
+                System.out.println(player);
+                TrumpMasterServer.CreateALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
                 WriteToClient(player, "<PlayerSettings>LobbyCreatedSuccesfully");
                 return;
             }
-            if (message.equals("LobbyHasBeenClosed"))
+            if (message.contains("LobbyHasBeenClosed"))
             {
                 TrumpMasterServer.CloseLobby(player.lobbyJoined);
                 //WriteToClient(player, "<PlayerSettings>LobbyHasBeenClosed");
                 return;
             }
-            if (message.equals("ChangeFaction"))
+            if (message.contains("ChangeFaction"))
             {
                 String[] metaMessage = message.split(":", 2);
                 int result = player.lobbyJoined.ChangeFaction(player, metaMessage[1]);
@@ -179,27 +183,27 @@ public class PlayerMessageHandler
                 }
                 return;
             }
-            if (message.equals("ReadyToPlay"))
+            if (message.contains("ReadyToPlay"))
             {
                 player.lobbyJoined.NotifyReadyToPlay(player, true);
                 return;
             }
-            if (message.equals("NotReadyToPlay"))
+            if (message.contains("NotReadyToPlay"))
             {
                 player.lobbyJoined.NotifyReadyToPlay(player, false);
                 return;
             }
-            if (message.equals("RemoveMeFromRoom"))
+            if (message.contains("RemoveMeFromRoom"))
             {
                 player.lobbyJoined.RemovePlayerFromRoom(player);
                 return;
             }
-            if (message.equals("Disconnecting"))
+            if (message.contains("Disconnecting"))
             {
                 player.Disconnect();
                 return;
             }
-            if (message.equals("StartTheMath"))
+            if (message.contains("StartTheMath"))
             {
                 player.lobbyJoined.StartTheMatch();
                 return;
