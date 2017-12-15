@@ -53,27 +53,15 @@ public class ServerMessageHandler
                 TrumpGameServer.gameMechanics.StartMatch();
                 return;
             }
-            if (message.contains("PlayerJoinedLobby"))
+            if (message.contains("ListPlayer"))
             {
-                String[] metaMessage = message.split(":", 3);
-                if(metaMessage[2].equals("BlueFaction"))
+                String[] metaMessage = message.split(":");
+                TrumpGameServer.gameMechanics.redTeam.clear();
+                TrumpGameServer.gameMechanics.blueTeam.clear();
+                for (int i = 1; i < metaMessage.length - 1; i += 2)
                 {
-                    TrumpGameServer.gameMechanics.blueTeam.add(new Player(metaMessage[1]));
-                }
-                TrumpGameServer.gameMechanics.redTeam.add(new Player(metaMessage[1]));
-                return;
-            }
-            if (message.contains("PlayerAbandonedLobby"))
-            {
-                String[] metaMessage = message.split(":", 2);
-                
-                for (int i = 0; i < TrumpGameServer.gameMechanics.blueTeam.size(); i++) 
-                {
-                    if(TrumpGameServer.gameMechanics.blueTeam.get(i).nickname.equals(metaMessage[1])) TrumpGameServer.gameMechanics.blueTeam.remove(i);                   
-                }
-                for (int i = 0; i < TrumpGameServer.gameMechanics.redTeam.size(); i++) 
-                {
-                    if(TrumpGameServer.gameMechanics.redTeam.get(i).nickname.equals(metaMessage[1])) TrumpGameServer.gameMechanics.redTeam.remove(i);                   
+                    if(metaMessage[i+1].equals("RedFaction")) TrumpGameServer.gameMechanics.redTeam.add(new Player(metaMessage[i]));
+                    else TrumpGameServer.gameMechanics.blueTeam.add(new Player(metaMessage[i]));
                 }
                 return;
             }
@@ -115,8 +103,9 @@ public class ServerMessageHandler
         {
             if (message.contains("CardHasBeenDropped"))
             {
+                System.out.println("DroppingCardOnServer");
                 String[] metaMessage = message.split(":", 3);
-                for (Player player : TrumpGameServer.gameMechanics.redTeam) 
+                for (Player player : TrumpGameServer.gameMechanics.playerPlayOrder) 
                 {
                     if(player.nickname.equals(metaMessage[1])) TrumpGameServer.gameMechanics.DropACard(player, Card.GetCardFromDeck(metaMessage[2]));
                 }

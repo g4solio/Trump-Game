@@ -29,10 +29,11 @@ public class GameMechanics
         redTeam = new ArrayList<>();
         blueTeam = new ArrayList<>();
         playerPlayOrder = new ArrayList<>();
+        cardOnField = new ArrayList<>();
         deck = new Card[40];
 
         
-        AllocateCard();
+        
     }
 
     public void AllocateCard()
@@ -50,13 +51,17 @@ public class GameMechanics
         {
             for (String number : numbers)
             {
-                deck[deckIndex] = new Card(seed, number);
+                Card card = new Card(seed, number);
+                System.out.println(card.toString());
+                deck[deckIndex] = card;
+                deckIndex ++;
             }
         }
     }
 
     public void StartMatch()
     {
+        AllocateCard();
         ShuffleDeck();
         GiveCardInHand();
         for (int i = 0; i < redTeam.size(); i++)
@@ -66,7 +71,7 @@ public class GameMechanics
         }
         for (int i = 0; i < blueTeam.size(); i++)
         {
-            playerPlayOrder.add((i + 1) * 2 - 1 , redTeam.get(i));           
+            playerPlayOrder.add((i + 1) * 2 - 1 , blueTeam.get(i));           
         }
         playerTurnIndex = 0;
         TrumpGameServer.getInstance().SendGameMessage("HasToPlay:" + playerPlayOrder.get(playerTurnIndex).nickname);
@@ -104,7 +109,8 @@ public class GameMechanics
 
         }
         currentdeckIndex = 0;
-        briscola = deck[40];
+        briscola = deck[39];
+        System.out.println(briscola.toString());
         TrumpGameServer.getInstance().SendGameMessage("TableHasBeenSettedUp:"+briscola.toString());
 
     }
@@ -161,15 +167,8 @@ public class GameMechanics
         cardOnField.add(card);
         TrumpGameServer.getInstance().SendGameMessage("CardHasBeenDropped:"+player.nickname+":"+card.toString());
         boolean allPlayerPlayed = true;
-        for (Player playerPlayed : playerPlayOrder) 
-        {
-            if(!playerPlayed.playedThisTurn) 
-            {
-                allPlayerPlayed = false;
-                break;
-            }
-        }
-        if(allPlayerPlayed) TakeCard();
+
+        if(playerTurnIndex >= playerPlayOrder.size())TakeCard();
         TrumpGameServer.getInstance().SendGameMessage("HasToPlay:" + playerPlayOrder.get(playerTurnIndex).nickname);
         playerTurnIndex ++;
     }
@@ -213,6 +212,7 @@ public class GameMechanics
 
         cardOnField.clear();
         playerPlayOrder.clear();
+        playerTurnIndex = 0;
         if(!NeedToPlay())
         {
             CalculateTotalScore();
@@ -256,8 +256,7 @@ public class GameMechanics
                 playerPlayOrder.add(redTeam.get(playerIndex));
             }
         }
-        TrumpGameServer.getInstance().SendGameMessage("HasToPlay:" + playerPlayOrder.get(playerTurnIndex).nickname);
-        playerTurnIndex ++;
+        DrawACard();
 
     }
     

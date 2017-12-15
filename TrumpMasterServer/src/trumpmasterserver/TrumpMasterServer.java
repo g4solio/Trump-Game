@@ -102,4 +102,9 @@ public class TrumpMasterServer
         System.out.println("Random Number : " + randomNumber);
         return randomNumber;
     }
+
+    static void SaySomething()
+    {
+        System.out.println("Something");
+    }
 }

@@ -76,16 +76,7 @@ public class Lobby
         }
         player.lobbyJoined = this;
 
-        String msgToSend = "<PlayerSettings>PlayerJoinedLobby:" + player.nickName + ":" + (returnValue == 0 ? "RedFaction" : "BlueFaction");
-        for (UserPlayer factionedPlayer : redFaction)
-        {
-            PlayerMessageWriter().WriteMessage(factionedPlayer, msgToSend);
-        }
-        for (UserPlayer factionedPlayer : blueFaction)
-        {
-            PlayerMessageWriter().WriteMessage(factionedPlayer, msgToSend);
-        }
-        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
+        RefreshPlayerInLobby();
         return returnValue;
     }
 
@@ -168,6 +159,7 @@ public class Lobby
             PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
         }
         PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
+
     }
 
     void RemovePlayerFromRoom(UserPlayer player)
@@ -180,23 +172,15 @@ public class Lobby
         {
             blueFaction.remove(player);
         }
-        String msgToSend = "<PlayerSettings>PlayerAbandonedLobby" + player.nickName;
-        for (UserPlayer redPlayer : redFaction)
-        {
-            PlayerMessageWriter().WriteMessage(redPlayer, msgToSend);
-        }
-        for (UserPlayer bluePlayer : blueFaction)
-        {
-            PlayerMessageWriter().WriteMessage(bluePlayer, msgToSend);
-        }
-        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
+        RefreshPlayerInLobby();
         return;
     }
 
     public void StartTheMatch()
     {
         isTheMatchStarted = true;
-
+        SendToAllClient("<PlayerSettings>MatchStarted");
+        PlayerMessageWriter().WriteMessage(gameServer, "<PlayerSettings>MatchStarted");
     }
 
     public void SendToAllClient(String msg)
@@ -212,6 +196,21 @@ public class Lobby
         //PlayerMessageWriter().WriteMessage(gameServer, msg);
 
         return;
+    }
+
+    private void RefreshPlayerInLobby()
+    {
+        String msgToSend = "<PlayerSettings>ListPlayer";
+        for (UserPlayer player : redFaction)
+        {
+            msgToSend += ":" + player.nickName + ":" + "RedFaction";
+        }        
+        for (UserPlayer player : blueFaction)
+        {
+            msgToSend += ":" + player.nickName + ":" + "BlueFaction";
+        }
+        SendToAllClient(msgToSend);
+        PlayerMessageWriter().WriteMessage(gameServer, msgToSend);
     }
 
 }

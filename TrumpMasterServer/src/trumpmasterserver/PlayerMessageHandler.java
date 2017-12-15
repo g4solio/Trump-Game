@@ -95,7 +95,7 @@ public class PlayerMessageHandler
             if (message.contains("AddMeToLobby"))
             {
                 String[] metaMessage = message.split(":", 3);
-                Lobby lobby = TrumpMasterServer.GetLobbyById(Integer.getInteger(metaMessage[1]));
+                Lobby lobby = TrumpMasterServer.GetLobbyById(Integer.parseInt(metaMessage[1]));
                 if (lobby == null)
                 {
                     WriteToClient(player, "<PlayerSettings>LoginRefused:Lobby Not Found");
@@ -146,11 +146,12 @@ public class PlayerMessageHandler
             if (message.contains("CreateALobby"))
             {
                 String[] metaMessage = message.split(":", 5);
-                for (String string : metaMessage) {
-                    System.out.println(string);
-                }
-                System.out.println(player);
-                TrumpMasterServer.CreateALobby(player, metaMessage[1], metaMessage[3], Integer.getInteger(metaMessage[4]), Integer.getInteger(metaMessage[2]));
+//                for (String string : metaMessage) {
+//                    System.out.println(string);
+//                }
+                //System.out.println(TrumpMasterServer.lobbyList);
+                //TrumpMasterServer.SaySomething();
+                TrumpMasterServer.CreateALobby(player, metaMessage[1], metaMessage[3], Integer.parseInt(metaMessage[4]), Integer.parseInt(metaMessage[2]));
                 WriteToClient(player, "<PlayerSettings>LobbyCreatedSuccesfully");
                 return;
             }
@@ -203,7 +204,7 @@ public class PlayerMessageHandler
                 player.Disconnect();
                 return;
             }
-            if (message.contains("StartTheMath"))
+            if (message.contains("StartTheMatch"))
             {
                 player.lobbyJoined.StartTheMatch();
                 return;

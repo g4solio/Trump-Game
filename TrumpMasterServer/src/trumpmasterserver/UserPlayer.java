@@ -85,5 +85,10 @@ public class UserPlayer extends Thread
         }
         return;
     }
+    
+    public void SaySomething()
+    {
+        System.out.println("Something");
+    }
 }
 
