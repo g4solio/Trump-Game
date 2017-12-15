@@ -50,7 +50,7 @@ public class GameMechanics
         {
             for (String number : numbers)
             {
-                deck[deckIndex] = new Card(number, seed);
+                deck[deckIndex] = new Card(seed, number);
             }
         }
     }

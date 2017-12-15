@@ -34,7 +34,7 @@ public class MessageHandler
 
     public void HandleMessage(String msg)
     {
-        if (msg.equals("") || msg.equals(" ") || msg == null)
+        if (msg.contains("") || msg.contains(" ") || msg == null)
         {
             return;
         }
@@ -52,82 +52,82 @@ public class MessageHandler
         {
 
             /////////
-            if (message.equals("LoginAccepted"))
+            if (message.contains("LoginAccepted"))
             {
 
                 return;
             }
-            if (message.equals("LoginRefused"))
+            if (message.contains("LoginRefused"))
             {
 
                 return;
             }
-            if (message.equals("AvailableLobbies"))
+            if (message.contains("AvailableLobbies"))
             {
 
                 return;
             }
-            if (message.equals("SignUpAccepted"))
+            if (message.contains("SignUpAccepted"))
             {
 
                 return;
             }
 
-            if (message.equals("SingUpRefused"))
+            if (message.contains("SingUpRefused"))
             {
 
                 return;
             }
-            if (message.equals("LobbyCreatedSuccesfully"))
+            if (message.contains("LobbyCreatedSuccesfully"))
             {
 
                 return;
             }
-            if (message.equals("PlayerJoinedLobby"))
+            if (message.contains("PlayerJoinedLobby"))
             {
 
                 return;
             }
-            if (message.equals("PlayerAbandonedLobby"))
+            if (message.contains("PlayerAbandonedLobby"))
             {
                 return;
             }
-            if (message.equals("LobbyHasBeenClosed"))
-            {
-
-                return;
-            }
-            if (message.equals("FactionChangedSuccesfully"))
+            if (message.contains("LobbyHasBeenClosed"))
             {
 
                 return;
             }
-            if (message.equals("ErrorChangingFaction"))
+            if (message.contains("FactionChangedSuccesfully"))
             {
 
                 return;
             }
-            if (message.equals("ChangeFactions"))
+            if (message.contains("ErrorChangingFaction"))
             {
 
                 return;
             }
-            if (message.equals("GameHasBeenStarted"))
+            if (message.contains("ChangeFactions"))
             {
 
                 return;
             }
-            if (message.equals("ReadyToPlay"))
+            if (message.contains("GameHasBeenStarted"))
             {
 
                 return;
             }
-            if (message.equals("NotReadyToPlay"))
+            if (message.contains("ReadyToPlay"))
             {
 
                 return;
             }
-            if (message.equals("MatchStarted"))
+            if (message.contains("NotReadyToPlay"))
+            {
+
+                return;
+            }
+            if (message.contains("MatchStarted"))
             {
 
                 return;

@@ -48,12 +48,12 @@ public class ServerMessageHandler
         {
 
             /////////
-            if (message.equals("MatchStarted"))
+            if (message.contains("MatchStarted"))
             {
                 TrumpGameServer.gameMechanics.StartMatch();
                 return;
             }
-            if (message.equals("PlayerJoinedLobby"))
+            if (message.contains("PlayerJoinedLobby"))
             {
                 String[] metaMessage = message.split(":", 3);
                 if(metaMessage[2].equals("BlueFaction"))
@@ -63,7 +63,7 @@ public class ServerMessageHandler
                 TrumpGameServer.gameMechanics.redTeam.add(new Player(metaMessage[1]));
                 return;
             }
-            if (message.equals("PlayerAbandonedLobby"))
+            if (message.contains("PlayerAbandonedLobby"))
             {
                 String[] metaMessage = message.split(":", 2);
                 
@@ -77,7 +77,7 @@ public class ServerMessageHandler
                 }
                 return;
             }
-            if (message.equals("ChangeFactions"))
+            if (message.contains("ChangeFactions"))
             {
                 String[] metaMessage = message.split(":", 3);
                 if(metaMessage[2].equals("RedFaction"))
@@ -105,7 +105,7 @@ public class ServerMessageHandler
                     }
                 return;
             }
-            if(message.equals("LobbyHasBeenClosed"))
+            if(message.contains("LobbyHasBeenClosed"))
             {
                 TrumpGameServer.getInstance().Close();
                 return;
@@ -113,7 +113,7 @@ public class ServerMessageHandler
         }
         if (tipeOfMessage.contains("GameInteraction"))
         {
-            if (message.equals("CardHasBeenDropped"))
+            if (message.contains("CardHasBeenDropped"))
             {
                 String[] metaMessage = message.split(":", 3);
                 for (Player player : TrumpGameServer.gameMechanics.redTeam) 
