@@ -66,7 +66,7 @@ public class TrumpGameServer extends Thread
                 
             } catch (IOException ex) 
             {
-                Logger.getLogger(TrumpGameServer.class.getName()).log(Level.SEVERE, null, ex);
+                Close();
             }
         }
     }
@@ -90,8 +90,7 @@ public class TrumpGameServer extends Thread
             System.out.println("Error closing socket " + ex);
         } catch (InterruptedException ex) 
         {
-            Logger.getLogger(TrumpGameServer.class.getName()).log(Level.SEVERE, null, ex);
-
+            System.out.println("Error closing socket " + ex);
         }
     }
 }

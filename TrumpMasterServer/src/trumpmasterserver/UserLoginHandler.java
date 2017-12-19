@@ -29,7 +29,7 @@ public class UserLoginHandler
     public ArrayList<String> registeredPasswords;
     public final String fileLocation = "LoginList.txt";
 
-    public UserLoginHandler getInstance()
+    public static UserLoginHandler getInstance()
     {
         if (instance == null)
         {
@@ -59,6 +59,7 @@ public class UserLoginHandler
     {
         for (String registeredUserName : registeredUserNames)
         {
+            System.out.println(registeredUserName);
             if(!registeredUserName.equals(username)) continue;
             if(registeredPasswords.get(registeredUserNames.indexOf(registeredUserName)).equals(password)) return 0;
             return 1;
@@ -85,7 +86,7 @@ public class UserLoginHandler
     //Password
     public void LoadData()
     {
-
+        System.out.println("Loading Data");
         JSONParser jSonParser = new JSONParser();
 
         try
@@ -96,19 +97,22 @@ public class UserLoginHandler
             JSONArray usernames = (JSONArray) jSonObject.get("Users");
             for (Object username : usernames)
             {
-                registeredPasswords.add(String.valueOf(username));
+                System.out.println("Adding UserName: " + String.valueOf(username));
+                registeredUserNames.add(String.valueOf(username));
             }
             
             JSONArray passwords = (JSONArray) jSonObject.get("Passwords");
             
             for (Object password : passwords)
             {
+                System.out.println("Adding password: " + String.valueOf(password));
                 registeredPasswords.add(String.valueOf(password));
             }
         } 
         catch (FileNotFoundException ex)
         {
             System.out.println("Error reading Json: " + ex);
+            
         }
         catch (IOException ex)
         {

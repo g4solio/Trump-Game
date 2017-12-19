@@ -60,9 +60,8 @@ public class PlayerMessageHandler
             if (message.contains("Login"))
             {
                 String[] metaMessage = message.split(":", 3);
-                //int loginResult = GetUserLoginHandler().Login(metaMessage[1], metaMessage[1]);
-                int loginResult = 0;
-                System.out.println("wow");
+                int loginResult = GetUserLoginHandler().Login(metaMessage[1], metaMessage[2]);
+                //int loginResult = 0;
                 switch (loginResult)
                 {
                     case 0:
@@ -223,7 +222,7 @@ public class PlayerMessageHandler
 
     public UserLoginHandler GetUserLoginHandler()
     {
-        return UserLoginHandler.instance.getInstance();
+        return UserLoginHandler.getInstance();
     }
 
 }

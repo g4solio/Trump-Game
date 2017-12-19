@@ -30,7 +30,7 @@ public class GameMechanics
         blueTeam = new ArrayList<>();
         playerPlayOrder = new ArrayList<>();
         cardOnField = new ArrayList<>();
-        deck = new Card[40];
+        deck = new Card[7];
 
         
         
@@ -53,6 +53,7 @@ public class GameMechanics
             {
                 Card card = new Card(seed, number);
                 System.out.println(card.toString());
+                if(deckIndex + 1 > deck.length) continue;
                 deck[deckIndex] = card;
                 deckIndex ++;
             }
@@ -101,15 +102,15 @@ public class GameMechanics
         for (int i = 0; i < deck.length; i++)
         {
 
-            int positionCard1 = GetRandom().nextInt(40);
-            int positionCard2 = GetRandom().nextInt(40);
+            int positionCard1 = GetRandom().nextInt(deck.length);
+            int positionCard2 = GetRandom().nextInt(deck.length);
             cardForSwitch = deck[positionCard1];
             deck[positionCard1] = deck[positionCard2];
             deck[positionCard2] = cardForSwitch;
 
         }
         currentdeckIndex = 0;
-        briscola = deck[39];
+        briscola = deck[deck.length - 1];
         System.out.println(briscola.toString());
         TrumpGameServer.getInstance().SendGameMessage("TableHasBeenSettedUp:"+briscola.toString());
 
@@ -126,11 +127,11 @@ public class GameMechanics
 ////        {
 ////            totalOwnedCard += player.OwnedCards.size();
 ////        }
-////        if (totalOwnedCard == 40)
+////        if (totalOwnedCard == deck.length)
 ////        {
 ////            return false;
 ////        }
-        if(currentdeckIndex >= 39) return false;
+        if(currentdeckIndex - 3 * redTeam.size() * 2 >= deck.length - 1) return false;
         return true;
     }
 
@@ -140,6 +141,7 @@ public class GameMechanics
         {
             for (int i = 0; i < 3; i++)
             {
+                
                 player.hand[i] = deck[currentdeckIndex];
                 TrumpGameServer.getInstance().SendGameMessage("CatchACard:"+deck[currentdeckIndex].toString() + ":" + player.nickname);
 
@@ -166,7 +168,6 @@ public class GameMechanics
         }
         cardOnField.add(card);
         TrumpGameServer.getInstance().SendGameMessage("CardHasBeenDropped:"+player.nickname+":"+card.toString());
-        boolean allPlayerPlayed = true;
 
         if(playerTurnIndex >= playerPlayOrder.size())TakeCard();
         TrumpGameServer.getInstance().SendGameMessage("HasToPlay:" + playerPlayOrder.get(playerTurnIndex).nickname);
@@ -180,13 +181,14 @@ public class GameMechanics
             for (int i = 0; i < 3; i++)
             {
                 if(player.hand[i] != null) continue;
+                if(currentdeckIndex >= deck.length -1 ) continue;
                 player.hand[i] = deck[currentdeckIndex];
                 TrumpGameServer.getInstance().SendGameMessage("CatchACard:"+deck[currentdeckIndex].toString() + ":" + player.nickname);
 
                 currentdeckIndex ++;
             }
         }
-        if(currentdeckIndex >= 39 && redTeam.size() > 1)
+        if(currentdeckIndex >= deck.length - 1 && redTeam.size() > 1)
         {
             TrumpGameServer.getInstance().SendGameMessage("ShowAlliesCards:" + redTeam.get(0).nickname + ":" + redTeam.get(1).hand[0] + ":" + redTeam.get(1).hand[1] + ":" + redTeam.get(1).hand[2]);
             TrumpGameServer.getInstance().SendGameMessage("ShowAlliesCards:" + redTeam.get(1).nickname + ":" + redTeam.get(0).hand[0] + ":" + redTeam.get(0).hand[1] + ":" + redTeam.get(0).hand[2]);
