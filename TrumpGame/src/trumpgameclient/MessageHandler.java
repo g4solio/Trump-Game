@@ -34,7 +34,7 @@ public class MessageHandler
 
     public void HandleMessage(String msg)
     {
-        if (msg.contains("") || msg.contains(" ") || msg == null)
+        if (msg.equals("") || msg.equals(" ") || msg == null)
         {
             return;
         }
