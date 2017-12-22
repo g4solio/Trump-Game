@@ -20,7 +20,7 @@ import trumpgameserver.*;
 public class TrumpGameClient {
 
     public static Socket socket;
-
+    public static String nickName;
     public static boolean InputFromConsole = true;
 
     /**

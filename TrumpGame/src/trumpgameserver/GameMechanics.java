@@ -30,7 +30,7 @@ public class GameMechanics
         blueTeam = new ArrayList<>();
         playerPlayOrder = new ArrayList<>();
         cardOnField = new ArrayList<>();
-        deck = new Card[7];
+        deck = new Card[40];
 
         
         
@@ -118,20 +118,21 @@ public class GameMechanics
 
     private boolean NeedToPlay()
     {
-////        int totalOwnedCard = 0;
-////        for (Player player : redTeam)
-////        {
-////            totalOwnedCard += player.OwnedCards.size();
-////        }
-////        for (Player player : blueTeam)
-////        {
-////            totalOwnedCard += player.OwnedCards.size();
-////        }
-////        if (totalOwnedCard == deck.length)
-////        {
-////            return false;
-////        }
-        if(currentdeckIndex - 3 * redTeam.size() * 2 >= deck.length - 1) return false;
+        int totalOwnedCard = 0;
+        for (Player player : redTeam)
+        {
+            totalOwnedCard += player.OwnedCards.size();
+        }
+        for (Player player : blueTeam)
+        {
+            totalOwnedCard += player.OwnedCards.size();
+        }
+        if (totalOwnedCard >= deck.length)
+        {
+            System.out.println("TotalOwnedCard " + totalOwnedCard);
+            return false;
+        }
+
         return true;
     }
 
@@ -164,6 +165,7 @@ public class GameMechanics
     {
         for (int i = 0; i < 3; i++)
         {
+            if(player.hand[i] == null) continue;
             if(player.hand[i].equals(card)) player.hand[i] = null;            
         }
         cardOnField.add(card);
@@ -266,7 +268,7 @@ public class GameMechanics
     {
         if(underCard.seed.equals(overCard.seed))
         {
-            return underCard.number > overCard.number ? true : false;
+            return underCard.getValue() > overCard.getValue() ? true : false;
         }
         if(underCard.seed.equals(briscola.seed))
         {

@@ -47,7 +47,7 @@ public class ListenerClass extends Thread
             try
             {
                 msgFromServer = listenerFromServer.readLine();
-                System.out.println("Msg From Server: " + msgFromServer);
+                //System.out.println("Msg From Server: " + msgFromServer);
                 MessageHandler.instance.HandleMessage(msgFromServer);
             } catch (IOException ex)
             {

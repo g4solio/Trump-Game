@@ -29,7 +29,7 @@ public class WriterClass
         try
         {
             writerToServer = new PrintWriter(new OutputStreamWriter(TrumpGameClient.socket.getOutputStream()));
-
+            
         } catch (IOException ex)
         {
             System.out.println("Error Instantiatoing the writer: " + ex);
@@ -38,6 +38,7 @@ public class WriterClass
 
     public void WriteToServer(String msg)
     {
+        if(msg.contains("Login")) TrumpGameClient.nickName = msg.split(":")[1];
         writerToServer.println(msg);
         writerToServer.flush();
 
